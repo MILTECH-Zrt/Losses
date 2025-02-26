@@ -254,7 +254,7 @@ def plotrwgatten():
     rwgl = dbRWGlength.get() * LC.unit2SI[rwgLunits_combo.get()]
 
     fc = LC.rectwaveguide_cutofffreq(a, b, m, n, mur, epsr)
-    LC.plotrectwgatten(a, b, sig, fc, rwgType_combo.get(), rwgMaterial_combo.get())
+    LC.plotrectwgatten(a, b, sig, fc, rwgType_combo.get())
 
 
 main_menu = tk.Menu(root)

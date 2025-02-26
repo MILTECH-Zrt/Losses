@@ -161,18 +161,21 @@ def rectwaveguideloss(a, b, sig, f, fc, waveguidelength=1):
     return alfa, Lwg
 
 
-def plotrectwgatten(a, b, sig, fc, WGname, WGmaterial):
+def plotrectwgatten(a, b, sig, fc, WGname):
     """ Plot rectangular waveguide attenuation vs. frequency"""
-    fr = np.arange(2, 10, 0.2)*1e9
-    attr = []
-    for f in fr:
-        att, L = rectwaveguideloss(a, b, sig, f, fc)
-        attr.append(att)
-    fig, ax = plt.subplots()
-    ax.plot(fr/1e9, attr, label=WGname + ", " + WGmaterial)
-    ax.set_xlabel('Frequency [GHz]')
-    ax.set_ylabel('Attenuation [dB/m]')
-    ax.set_title("Rect. Waveguide Attenuation")
-    ax.legend()
-    fig.show()
+    fr = np.arange(1, 10.1, 0.1)*1e9
+    fig = plt.figure()
+    for m in list(WG_conductivity.keys()):
+        attr = []
+        sig = WG_conductivity[m]
+        for f in fr:
+            att, L = rectwaveguideloss(a, b, sig, f, fc)
+            attr.append(att)
+        fig = plt.plot(fr/1e9, attr, label=WGname + ", " + m)
+
+    plt.xlabel('Frequency [GHz]')
+    plt.ylabel('Attenuation [dB/m]')
+    plt.title("Rect. Waveguide Attenuation")
+    plt.legend(draggable=True)
+    plt.show()
 
