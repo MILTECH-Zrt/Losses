@@ -120,6 +120,15 @@ unit2SI = {
         "k": 1.3806504e-23  # Boltzmann J/K
     }
 
+def pow2db(xpow):
+    """
+    :param xpow: quantity to convert into dB
+    :return:  value in dB
+    """
+    # We want to guarantee that the result is an integer. if y is a negative power of 10.  To do so, we force some
+    # rounding of precision by adding 300 - 300.
+    ydB = (10 * np.log10(xpow) + 300) - 300
+    return ydB
 
 def rectwaveguide_cutofffreq(a, b, m=1, n=0, mur=1, epsr=1):
     """
@@ -164,6 +173,22 @@ def rectwaveguideloss(a, b, sig, f, fc, waveguidelength=1):
         alfa = np.nan
         Lwg = np.nan
     return alfa, Lwg
+
+
+def mismatchloss(vswr):
+    """
+    :param vswr: VSWR value, e.g.: 1.2
+    :return: mismatch loss in dB, reflection coefficient
+    """
+    if vswr > 1:
+        reflcoeff = (vswr - 1)/(vswr + 1)
+    else:
+        reflcoeff = (1 - vswr) / (vswr + 1)
+
+    Lmismatch = (vswr + 1)**2 / (4 * vswr)
+    LmismatchdB = pow2db(Lmismatch)
+    fractionOfPowerReclected = reflcoeff**2
+    return LmismatchdB, reflcoeff, fractionOfPowerReclected
 
 
 def plotrectwgatten(a, b, sig, fc, WGname):

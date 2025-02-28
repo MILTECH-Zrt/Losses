@@ -51,6 +51,14 @@ def rwgfrequnit_changed(event):
     rwgfcunit.set(rwgfunits_combo.get())
 
 
+def vswr_changed(event):
+    vswr = dbVSWR.get()
+    Lmis, refcoeff, fracpowrefl = LC.mismatchloss(vswr)
+    dbMismatchLoss.set(Lmis)
+    dbReflectionCoeff.set(refcoeff)
+    dbFracPowRefl.set(fracpowrefl)
+
+
 """ Calculations """
 
 
@@ -88,7 +96,23 @@ dbVSWR = tk.DoubleVar()
 dbVSWR.set(1)
 VSWR_entry = tk.Entry(vswframe, textvariable=dbVSWR, width=ew)
 VSWR_entry.grid(row=rc, column=1)
+VSWR_entry.bind("<Return>", vswr_changed)
 
+rc += 1
+ttk.Label(vswframe, text='Reflection coefficient:', width=lw, anchor='w').grid(row=rc, column=0)
+dbReflectionCoeff = tk.DoubleVar()
+ttk.Label(vswframe, textvariable=dbReflectionCoeff, width=lw, anchor='w').grid(row=rc, column=1)
+
+rc += 1
+ttk.Label(vswframe, text='Fraction of power reflected:', width=lw, anchor='w').grid(row=rc, column=0)
+dbFracPowRefl = tk.DoubleVar()
+ttk.Label(vswframe, textvariable=dbFracPowRefl, width=lw, anchor='w').grid(row=rc, column=1)
+
+rc += 1
+ttk.Label(vswframe, text='Mismatch loss:', width=lw, anchor='w').grid(row=rc, column=0)
+dbMismatchLoss = tk.DoubleVar()
+ttk.Label(vswframe, textvariable=dbMismatchLoss, width=lw, anchor='w').grid(row=rc, column=1)
+ttk.Label(vswframe, text='dB', width=uw, anchor='w').grid(row=rc, column=2)
 
 """ Rectangular Waveguide Frame """
 
