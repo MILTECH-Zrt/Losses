@@ -8,12 +8,17 @@ c = 299792458  # lightspeed m/s
 """Waveguide material conductivity in Siemens/m"""
 WG_conductivity = {
     "Aluminum": 37.67e6,
-    "Brass (5% Zn)":    33.4e6,
+    "Brass":    15e6,
     "Brass (30% Zn)":   16.7e6,
+    "Brass (5% Zn)":    33.4e6,
+    "Bronze":   10e6,
+    "Chromium": 5.56e6,
     "Copper":   59.6e6,
-    "Copper (annealed)":     58e6,
-    "Gold":             41.1e6,
-    "Silver":   63e6,
+    "Copper (annealed)":    58e6,
+    "Gold": 41.1e6,
+    "Nickel":   11.5e6,
+    "Silver":   62.9e6,
+    "Zinc": 17.6e6
 }
 
 """Waveguide type and a,b sizes in inch, recommended frequency range"""
