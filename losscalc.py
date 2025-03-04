@@ -130,6 +130,7 @@ def pow2db(xpow):
     ydB = (10 * np.log10(xpow) + 300) - 300
     return ydB
 
+
 def rectwaveguide_cutofffreq(a, b, m=1, n=0, mur=1, epsr=1):
     """
     Calculates the cut-off frequency of rectangular waveguide
@@ -190,6 +191,41 @@ def mismatchloss(vswr):
     fractionOfPowerReclected = reflcoeff**2
     return LmismatchdB, reflcoeff, fractionOfPowerReclected
 
+
+def polarizationloss(TxP, RxP):
+
+    if TxP == "Horizontal":
+        if RxP == "Vertical":
+            Lpol = 10
+        elif RxP == "Horizontal":
+            Lpol = 0
+        else:  # RHC or LHC
+            Lpol = 3
+    elif TxP == "Vertical":
+        if RxP == "Vertical":
+            Lpol = 0
+        elif RxP == "Horizontal":
+            Lpol = 10
+        else:  # RHC or LHC
+            Lpol = 3
+    elif TxP == "RHC":
+        if RxP == "RHC":
+            Lpol = 3
+        elif RxP == "LHC":
+            Lpol = 0
+        else:  # Horizontal or Vertical
+            Lpol = 3
+    elif TxP == "LHC":
+        if RxP == "RHC":
+            Lpol = 0
+        elif RxP == "LHC":
+            Lpol = 3
+        else:  # Horizontal or Vertical
+            Lpol = 3
+    else:
+        Lpol = None
+
+    return Lpol
 
 def plotrectwgatten(a, b, sig, fc, WGname):
     """ Plot rectangular waveguide attenuation vs. frequency"""
